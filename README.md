@@ -30,3 +30,12 @@ WebGL absence uses the library's CSS fallback. Reduced motion starts the light f
 ## Hosting on paulolo.com
 
 Deploy the contents of `dist/` to the domain root. All three pages use query parameters, so no SPA rewrite rules are needed. Canonical, Open Graph, and Twitter metadata target `https://paulolo.com/`; the social preview is `public/og.png`, copied into `dist/og.png` by Vite.
+
+### Docker
+
+```sh
+docker build --pull -t paulolo-liquid .
+docker run -d --name paulolo-liquid --restart unless-stopped -p 8080:8080 paulolo-liquid
+```
+
+Open `http://localhost:8080`. The multi-stage image builds with Node 24 and serves only `dist/` with non-root Nginx on port 8080, with an HTTP health check. Put your HTTPS reverse proxy in front of port 8080 for `paulolo.com`. No runtime environment variables are required. Rebuild with `--pull` to receive base-image updates.
