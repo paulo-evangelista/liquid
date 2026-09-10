@@ -1,4 +1,4 @@
-Generated with built-in imagegen. Final image: og.png (1734 × 907).
+Generated with built-in imagegen. Final image: og.jpg (1200 × 630), resized and compressed from the original generated PNG.
 
 Use case: ads-marketing
 Asset type: one premium website Open Graph social card, wide 1.91:1 composition, ideally 1536x800 pixels.

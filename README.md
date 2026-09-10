@@ -29,7 +29,7 @@ A fullscreen startup screen waits for fonts, the first video frame, every lens, 
 
 ## Hosting on liquid.paulolo.com
 
-Deploy the contents of `dist/` to the domain root. All three pages use query parameters, so no SPA rewrite rules are needed. Canonical, Open Graph, and Twitter metadata target `https://liquid.paulolo.com/`; the social preview is `public/og.png`, copied into `dist/og.png` by Vite.
+Deploy the contents of `dist/` to the domain root. All three pages use query parameters, so no SPA rewrite rules are needed. Canonical, Open Graph, and Twitter metadata target `https://liquid.paulolo.com/`; the social preview is `public/og.jpg`, copied into `dist/og.jpg` by Vite.
 
 ### Docker
 
