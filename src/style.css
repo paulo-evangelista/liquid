@@ -13,3 +13,4 @@
 .github-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}.github-link svg{width:20px;height:20px}.github-link:hover{color:var(--acid)}
 @media(max-width:760px){.github-link>span{display:none}.topbar{gap:14px}.brand{font-size:19px}}
 @media(max-width:560px){.topbar .brand{order:0}.topbar .github-link{order:1}.topbar nav{order:2}}
+.soft-glass .glass{opacity:1!important;background:rgba(35,48,31,.6)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;pointer-events:auto!important}

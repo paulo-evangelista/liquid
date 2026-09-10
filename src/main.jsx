@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import './style.css';
+import {waitForLenses} from './startup.js';
 import {defaults as base, ranges, presets, validateSettings} from './settings.js';
 
 const requestedPage = new URLSearchParams(location.search).get('view');
@@ -39,7 +40,68 @@ function Background(){
 }
 function App(){
  const [status,setStatus]=useState('Preparing optics');
- useEffect(()=>{let cancelled=false; const init=async()=>{await document.fonts.ready;await new Promise(r=>setTimeout(r,350));if(cancelled)return;try{const result=window.liquidGL({...base,target:'.glass',snapshot:'#scene',on:{init:()=>setStatus('WebGL active')}});lenses=Array.isArray(result)?result:[result];lenses.forEach(l=>{if(l?.options)l.options={...l.options}});if(page==='showcase')tune({...base,refraction:.0535,aberration:.7,bevelDepth:.206,bevelWidth:.24,magnify:1.15});if(window.__liquidGLNoWebGL__)setStatus('CSS fallback');window.dispatchEvent(new Event('glass-ready'));}catch(e){console.error(e);setStatus('Glass unavailable')}};init();return()=>{cancelled=true}},[]);
+ useEffect(()=>{
+  let finished=false, cancelled=false, exitTimer;
+  const controller=new AbortController();
+  const screen=document.getElementById('startup-screen');
+  const finish=(label)=>{
+   if(finished||cancelled)return;
+   finished=true;
+   clearTimeout(timeout);
+   controller.abort();
+   setStatus(label);
+   exitTimer=setTimeout(()=>{
+    screen?.setAttribute('data-ready','true');
+    exitTimer=setTimeout(()=>{
+     screen?.remove();
+     document.body.classList.remove('is-loading');
+     document.getElementById('root').inert=false;
+     document.getElementById('root').removeAttribute('aria-busy');
+    },reduced?0:450);
+   },1000);
+  };
+  const fallback=()=>{
+   if(finished||cancelled)return;
+   const renderer=window.__liquidGLRenderer__;
+   if(renderer){
+    cancelAnimationFrame(renderer._rafId);
+    renderer.canvas.style.display='none';
+    renderer.lenses.forEach(l=>{l.setTilt(false);l.setShadow(false)});
+   }
+   document.body.classList.add('soft-glass');
+   finish('Soft glass mode');
+  };
+  const timeout=setTimeout(fallback,12000);
+  const init=async()=>{
+   try{
+    const video=document.querySelector('#scene video');
+    const videoReady=video.readyState>=2?Promise.resolve():new Promise((resolve,reject)=>{
+     video.addEventListener('loadeddata',resolve,{once:true,signal:controller.signal});
+     video.addEventListener('error',reject,{once:true,signal:controller.signal});
+    });
+    await Promise.all([document.fonts.ready,videoReady]);
+    if(finished||cancelled)return;
+    screen?.querySelector('[role="status"]')?.replaceChildren('Bending the light');
+    const overlays=[...document.querySelectorAll('#scene .liquid-word, #scene .test-type')];
+    // The renderer has no public event for its asynchronous text capture.
+    const gate=waitForLenses(document.querySelectorAll('.glass'),requestAnimationFrame,()=>
+     finished||cancelled||overlays.every(el=>window.__liquidGLRenderer__?._dynMeta.get(el)?.lastCapture)
+    );
+    const result=window.liquidGL({...base,reveal:'none',target:'.glass',snapshot:'#scene',on:{init:gate.onInit}});
+    lenses=Array.isArray(result)?result:[result];
+    lenses.forEach(l=>{if(l?.options)l.options={...l.options}});
+    // Recompose foreground lettering after every video frame, so lenses retain it.
+    if(overlays.length)window.liquidGL.registerDynamic(overlays);
+    if(page==='showcase')tune({...base,refraction:.0535,aberration:.7,bevelDepth:.206,bevelWidth:.24,magnify:1.15});
+    window.dispatchEvent(new Event('glass-ready'));
+    if(window.__liquidGLNoWebGL__){finish('Soft glass mode');return}
+    await gate.ready;
+    finish('WebGL active');
+   }catch(error){console.error(error);fallback()}
+  };
+  init();
+  return()=>{cancelled=true;clearTimeout(timeout);clearTimeout(exitTimer);controller.abort()};
+ },[]);
  return <><Background/><header className="topbar"><a className="brand" href="/"><Mark/><span>paulolo.com</span><b>liquid.</b></a><nav aria-label="Experiments">{['showcase','dashboard','playground'].map((p,i)=><a key={p} href={`?view=${p}`} aria-current={page===p?'page':undefined}><span>0{i+1}</span>{p}</a>)}</nav><a className="github-link" href="https://github.com/paulo-evangelista/liquid" target="_blank" rel="noreferrer" aria-label="View paulolo.com liquid on GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297a12 12 0 0 0-3.793 23.385c.6.111.82-.261.82-.577v-2.234c-3.338.726-4.043-1.416-4.043-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.303-5.467-1.334-5.467-5.931 0-1.31.469-2.381 1.236-3.221-.124-.303-.536-1.524.117-3.176 0 0 1.008-.323 3.301 1.23a11.52 11.52 0 0 1 6.006 0c2.291-1.553 3.297-1.23 3.297-1.23.655 1.652.243 2.873.119 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.216.694.825.576A12 12 0 0 0 12 .297Z"/></svg><span>GitHub</span></a></header><main>{page==='playground'?<Playground/>:page==='showcase'?<Showcase/>:<Dashboard/>}</main><footer><span><i className={status==='WebGL active'?'live':''}/> {status}</span><span>REFRACTION, NOT AN IMITATION.</span><a href="https://github.com/naughtyduk/liquidGL" target="_blank" rel="noreferrer">LiquidGL ↗</a></footer></>;
 }
 function Dashboard(){

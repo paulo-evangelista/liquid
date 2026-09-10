@@ -17,15 +17,15 @@ The dashboard uses fictional data. The playground exposes optical parameters, pr
 
 The unmodified MIT-licensed library is vendored at `public/vendor/liquidGL.js` from https://github.com/naughtyduk/liquidGL at commit 70e4907f517380d1426881b76e664f8728f2eb79. Attribution is preserved in its header.
 
-The background is drawn locally to canvas and passed to a muted video via `captureStream`, letting liquidGL use its automatic video refraction. No external video assets or backend are needed. Font files load from Google Fonts.
+The background is drawn locally to canvas and passed to a muted video via `captureStream`, letting liquidGL use its automatic video refraction. Foreground lettering is registered for dynamic compositing so video frames never overwrite it inside lenses. No external video assets or backend are needed. Font files load from Google Fonts.
 
 All lenses share one WebGL canvas and z-index. Per-lens options are cloned because upstream initially shares the options object across targets. Native document navigation between the three React pages avoids accumulating renderers/listeners: upstream does not expose a public destroy API. The playground follows the upstream helper implementation to refresh snapshot resolution and replay reveals; those internal methods should be rechecked when upgrading.
 
-WebGL absence uses the library's CSS fallback. Reduced motion starts the light field paused. The public interface keeps technical attribution in a single footer link. No smooth-scroll dependency is installed. This POC has no server, authentication, or persistent data.
+A fullscreen startup screen waits for fonts, the first video frame, every lens, and the foreground text capture, then holds for one second before fading out. Initial lens fades are disabled to avoid a second reveal. A 12-second watchdog switches to soft glass if preparation stalls. WebGL absence uses the library's CSS fallback. Reduced motion starts the light field paused. The public interface keeps technical attribution in a single footer link. No smooth-scroll dependency is installed. This POC has no server, authentication, or persistent data.
 
 ## Verification
 
-`npm test` checks every preset and rejects invalid optical settings. Browser checks covered dashboard period/filter/focus controls, presets, shape selection, copy, capture replay, keyboard lens movement, mobile overflow, and the optional WebMCP settings tool's valid and invalid input paths. Browser console had no warnings or errors during those checks.
+`npm test` checks every preset, rejects invalid optical settings, and verifies startup waits for all lenses, foreground compositing, and paint frames. Browser checks covered dashboard period/filter/focus controls, presets, shape selection, copy, capture replay, keyboard lens movement, mobile overflow, and the optional WebMCP settings tool's valid and invalid input paths. Browser console had no warnings or errors during those checks.
 
 ## Hosting on paulolo.com
 
