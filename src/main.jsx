@@ -92,7 +92,7 @@ function App(){
     lenses.forEach(l=>{if(l?.options)l.options={...l.options}});
     // Recompose foreground lettering after every video frame, so lenses retain it.
     if(overlays.length)window.liquidGL.registerDynamic(overlays);
-    if(page==='showcase')tune({...base,refraction:.0535,aberration:.7,bevelDepth:.206,bevelWidth:.24,magnify:1.15});
+    if(page==='showcase')tune({...base,refraction:.026,aberration:.2,bevelDepth:.116,bevelWidth:.24,magnify:1.15});
     window.dispatchEvent(new Event('glass-ready'));
     if(window.__liquidGLNoWebGL__){finish('Soft glass mode');return}
     await gate.ready;
@@ -121,7 +121,7 @@ function Playground(){
 }
 function Range({label,setting,value,onChange,hint}){const [min,max,step]=ranges[setting];return <label className="range-label"><span>{label}<output>{Number(value).toFixed(step<.01?3:step<1?2:0)}</output></span><input type="range" aria-label={label} min={min} max={max} step={step} value={value} onChange={e=>onChange(Number(e.target.value))}/>{hint&&<small>{hint}</small>}</label>}
 function Showcase(){
- const [palette,setPalette]=useState(0),[paused,setPaused]=useState(reduced),[power,setPower]=useState(.7),[pos,setPos]=useState({x:0,y:0}),[fullscreen,setFullscreen]=useState(false),[notice,setNotice]=useState('');const drag=useRef(null);
+ const [palette,setPalette]=useState(0),[paused,setPaused]=useState(reduced),[power,setPower]=useState(.2),[pos,setPos]=useState({x:0,y:0}),[fullscreen,setFullscreen]=useState(false),[notice,setNotice]=useState('');const drag=useRef(null);
  useEffect(()=>{window.dispatchEvent(new CustomEvent('light-field',{detail:{palette,paused}}))},[palette,paused]);
  useEffect(()=>{tune({aberration:power,bevelDepth:.08+power*.18,refraction:.015+power*.055});},[power]);
  useEffect(()=>{lenses.filter(l=>l?.el?.hasAttribute('data-tunable')).forEach(l=>l.updateMetrics())},[pos]);
