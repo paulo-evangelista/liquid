@@ -1,0 +1,11 @@
+Generated with built-in imagegen. Final image: og.png (1734 × 907).
+
+Use case: ads-marketing
+Asset type: one premium website Open Graph social card, wide 1.91:1 composition, ideally 1536x800 pixels.
+Primary request: create a stunning editorial brand poster for "paulolo.com liquid." with an optical liquid glass visual.
+Scene/backdrop: ink-black deep forest background #0c100d, hundreds of luminous acid-lime / yellow-green fine concentric warped elliptical contour lines forming a flowing toroidal light field. Lines form precise delicate continuous curves and sweep through the lower half and right, leaving dark readable space for the left headline.
+Subject: one large crystal clear glass spherical lens on the right, exquisitely shaded and physically convincing, refracting and warping the lime contour field through its volume, with subtle rainbow chromatic dispersion along the rim and crisp specular highlights.
+Style/medium: premium contemporary editorial design, photoreal optical glass rendering combined with clean sophisticated typography. Rich blacks, luminous lime, warm cream white.
+Composition/framing: wide landscape social card, generous safe margins at least 80px, brand wordmark top left; main headline on the left around vertical center; glass lens dominant on right. Text readable at thumbnail size. Refined uncluttered asymmetrical balance.
+Text (verbatim): top-left wordmark "paulolo.com liquid." with paulolo.com in warm cream white and liquid. in acid lime, all in DM Sans / Manrope-like clean rounded geometric sans. Main headline exactly "Reality, beautifully distorted." arranged as three large lines: "Reality," then "beautifully" then "distorted.". First two lines clean geometric sans in cream white; distorted. in elegant italic serif like Georgia, acid lime.
+Constraints: render all text accurately and legibly, one image only, no other text. This is a brand/social poster, no navbar, buttons, dashboard, interface chrome, library mentions, watermark, or decorative badges. The sphere must look like transparent refractive glass, not a solid green ball.

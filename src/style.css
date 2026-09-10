@@ -8,3 +8,5 @@
 .floating-tag,.coordinate-tag{transform:none}.stage-coordinate{z-index:11}
 .showcase-stage{overflow:clip}
 @media(max-width:480px){.floating-tag{top:210px}}
+.brand{gap:8px}.brand>span:not(.mark){font-weight:450}.brand>b{font-weight:700}.brand .mark{margin-right:6px}footer>a:hover{color:var(--acid)}
+@media(max-width:900px){.brand>span:not(.mark){display:inline}}
