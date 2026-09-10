@@ -35,7 +35,7 @@ Deploy the contents of `dist/` to the domain root. All three pages use query par
 
 ```sh
 docker build --pull -t paulolo-liquid .
-docker run -d --name paulolo-liquid --restart unless-stopped -p 8080:8080 paulolo-liquid
+docker run -d --name paulolo-liquid --restart unless-stopped -p 3033:3033 paulolo-liquid
 ```
 
-Open `http://localhost:8080`. The multi-stage image builds with Node 24 and serves only `dist/` with non-root Nginx on port 8080, with an HTTP health check. Put your HTTPS reverse proxy in front of port 8080 for `paulolo.com`. No runtime environment variables are required. Rebuild with `--pull` to receive base-image updates.
+Open `http://localhost:3033`. The multi-stage image builds with Node 24 and serves only `dist/` with non-root Nginx on port 3033, with an HTTP health check. Put your HTTPS reverse proxy in front of port 3033 for `paulolo.com`. No runtime environment variables are required. Rebuild with `--pull` to receive base-image updates.
