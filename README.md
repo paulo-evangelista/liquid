@@ -27,9 +27,9 @@ A fullscreen startup screen waits for fonts, the first video frame, every lens, 
 
 `npm test` checks every preset, rejects invalid optical settings, and verifies startup waits for all lenses, foreground compositing, and paint frames. Browser checks covered dashboard period/filter/focus controls, presets, shape selection, copy, capture replay, keyboard lens movement, mobile overflow, and the optional WebMCP settings tool's valid and invalid input paths. Browser console had no warnings or errors during those checks.
 
-## Hosting on paulolo.com
+## Hosting on liquid.paulolo.com
 
-Deploy the contents of `dist/` to the domain root. All three pages use query parameters, so no SPA rewrite rules are needed. Canonical, Open Graph, and Twitter metadata target `https://paulolo.com/`; the social preview is `public/og.png`, copied into `dist/og.png` by Vite.
+Deploy the contents of `dist/` to the domain root. All three pages use query parameters, so no SPA rewrite rules are needed. Canonical, Open Graph, and Twitter metadata target `https://liquid.paulolo.com/`; the social preview is `public/og.png`, copied into `dist/og.png` by Vite.
 
 ### Docker
 
@@ -38,4 +38,4 @@ docker build --pull -t paulolo-liquid .
 docker run -d --name paulolo-liquid --restart unless-stopped -p 3033:3033 paulolo-liquid
 ```
 
-Open `http://localhost:3033`. The multi-stage image builds with Node 24 and serves only `dist/` with non-root Nginx on port 3033, with an HTTP health check. Put your HTTPS reverse proxy in front of port 3033 for `paulolo.com`. No runtime environment variables are required. Rebuild with `--pull` to receive base-image updates.
+Open `http://localhost:3033`. The multi-stage image builds with Node 24 and serves only `dist/` with non-root Nginx on port 3033, with an HTTP health check. Put your HTTPS reverse proxy in front of port 3033 for `liquid.paulolo.com`. No runtime environment variables are required. Rebuild with `--pull` to receive base-image updates.

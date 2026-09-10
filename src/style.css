@@ -8,7 +8,7 @@
 .floating-tag,.coordinate-tag{transform:none}.stage-coordinate{z-index:11}
 .showcase-stage{overflow:clip}
 @media(max-width:480px){.floating-tag{top:210px}}
-.brand{gap:8px}.brand>span:not(.mark){font-weight:450}.brand>b{font-weight:700}.brand .mark{margin-right:6px}footer>a:hover{color:var(--acid)}
+.brand{gap:8px}.brand>span:not(.mark){font-weight:450}.brand>b{font-weight:700}.brand .mark{margin-right:6px}footer a:hover{color:var(--acid)}
 @media(max-width:900px){.brand>span:not(.mark){display:inline}}
 .github-link{display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap}.github-link svg{width:20px;height:20px}.github-link:hover{color:var(--acid)}
 @media(max-width:760px){.github-link>span{display:none}.topbar{gap:14px}.brand{font-size:19px}}
@@ -16,3 +16,5 @@
 .soft-glass .glass{opacity:1!important;background:rgba(35,48,31,.6)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;pointer-events:auto!important}
 
 @media(max-width:760px){.floating-tag{display:none}}
+
+.footer-links{display:flex;gap:18px;align-items:center;white-space:nowrap}
